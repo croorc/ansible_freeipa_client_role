@@ -1,0 +1,18 @@
+# tasks file for freeipa-role
+---
+
+- name: Download required roles
+  local_action: command ansible-galaxy install -r {{ role_path }}/requirements.yml
+  become: false
+  when: ansible_distribution != 'Ubuntu' and ansible_distribution_version != '20.04'
+
+- name: Install freeipa client from role
+  include_role:
+    name: freeipa.ansible_freeipa.ipaclient
+  when: ansible_distribution != 'Ubuntu' and ansible_distribution_version != '20.04'
+
+- name: run IPA install script
+  become: yes
+  remote_user: ubuntu
+  script: files/ipa-install.sh {{ipaadmin_password}}
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
