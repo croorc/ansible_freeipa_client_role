@@ -1,0 +1,1 @@
+# ansible_freeipa_client_role
