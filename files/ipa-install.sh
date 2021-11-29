@@ -27,11 +27,13 @@ apt -y install freeipa-client
 #        ENROLL_PW=$(echo $DATA | jq -r --arg k "enrollment_password" '.[$k]')
 #fi
 
-ENROLL_PW=$1
+PRINCIPAL=$1
+PASSWORD=$2
+DOMAIN=$3
 
 run () {
   ipa-client-install --uninstall --unattended
-  ipa-client-install --domain=VPC.SPARKHIRE.COM --force-join --unattended --principal=enrollment -w $ENROLL_PW
+  ipa-client-install --domain=$DOMAIN --force-join --unattended --principal=$PRINCIPAL -w $PASSWORD
   return $?
 }
 

@@ -14,5 +14,5 @@
 - name: run IPA install script
   become: yes
   remote_user: ubuntu
-  script: files/ipa-install.sh {{ipaadmin_password}}
+  script: files/ipa-install.sh {{ipaadmin_principal}} {{ipaadmin_password}} {{ipaclient_domain}}
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '20.04'
